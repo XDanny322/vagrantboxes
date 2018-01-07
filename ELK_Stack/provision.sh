@@ -1,3 +1,7 @@
+#!/bin/bash
+#
+# provision.sh for ELK Stack.
+########################################################################
 myhostname=elkstackbox
 
 # Install needed tools
@@ -80,4 +84,4 @@ systemctl status kibana
 systemctl start kibana
 systemctl status kibana
 
-# Test by point a brower to http://192.168.86.49:5601/
+# Test by point a brower to http://<IP>:5601/
