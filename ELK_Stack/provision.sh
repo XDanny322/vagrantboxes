@@ -1,4 +1,4 @@
-myhostname=vagrantbox
+myhostname=elkstack_box
 
 # Install needed tools
 yum -y install wget mlocate vim net-tools
