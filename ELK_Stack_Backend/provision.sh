@@ -1,15 +1,11 @@
 #!/bin/bash
 #
-# provision.sh for ELK Stack.
+# provision.sh for ELK Stack Server
 ########################################################################
-myhostname=elkstackbox
+myhostname=elkstackserver
 
 # Install needed tools
-yum -y install wget mlocate vim net-tools
-
-# Install Java
-yum -y install java
-java -version
+yum -y install wget mlocate vim net-tools telnet
 
 # Make a directory to work in
 mkdir /tmp/installs
@@ -59,6 +55,29 @@ systemctl status logstash
 systemctl start logstash
 systemctl status logstash
 
+#Here is the grok setting when we are ready to enable:
+  # input{
+  #   beats{
+  #     port => "5043"
+  #   }
+  # }
+  # filter {
+  #   if [type] == "syslog" {
+  #     grok {
+  #       match => { "message" => "%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}" }
+  #     }
+  #     date{
+  #       match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+  #     }
+  #   }
+  # }
+  # output{
+  #   elasticsearch {
+  #     hosts => ["127.0.0.1:9200"]
+  #     index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}"
+  #     document_type => "%{[@metadata][type]}"
+  #   }
+  # }
 
 ###############################################################################
 # Downloading kibana
