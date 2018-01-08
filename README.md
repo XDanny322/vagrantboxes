@@ -22,18 +22,20 @@ To use this repo, usually on your laptop
 
 ## Notes
 Vagrant Commands
-  * vagrant -v
-  * vagrant suspend
-  * vagrant resume
-  * vagrant init hashicorp/precise32
-  * vagrant init centos/7
-  * vagrant ssh-config
-  * vagrant up                         # Bring up system
-  * vagrant ssh
-  * vagrant halt                       # Shutdown VM
-  * vagrant destory                    # Distory VM
-  * VBoxManage.exe -v
-  * VBoxManage.exe list vms
+  ```
+  vagrant -v
+  vagrant suspend
+  vagrant resume
+  vagrant init hashicorp/precise32
+  vagrant init centos/7
+  vagrant ssh-config
+  vagrant up
+  vagrant ssh
+  vagrant halt
+  vagrant destory
+  VBoxManage.exe -v
+  VBoxManage.exe list vms
+  ```
 
 Sometimes vagrant ssh (2.0.1) doesn't work in Window's Cygwin. Do the below to get around.
   * To Fix: `export VAGRANT_PREFER_SYSTEM_BIN=1 `
