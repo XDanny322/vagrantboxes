@@ -3,7 +3,7 @@ This repo contains bunch of my person testing vagrant boxes, separated by folder
 
 To use this repo, usually on your laptop
 
-Windows
+## Windows
 * Install Choco - https://chocolatey.org/install
 * Optional
   * `chovo install cygwin`
@@ -17,27 +17,25 @@ Windows
 * `git clone git@github.com:XDanny322/vagrantboxes.git`
 * `vagrant up`
 
-Mac
+## Mac
 * Coming soon
 
 ## Notes
 Vagrant Commands
-  vagrant -v
-  vagrant suspend
-  vagrant resume
-  vagrant init hashicorp/precise32
-  vagrant init centos/7
-  vagrant ssh-config
-  vagrant up                         # Bring up system
-  vagrant ssh
-  vagrant halt                       # Shutdown VM
-  vagrant destory                    # Distory VM
-  VBoxManage.exe -v
-  VBoxManage.exe list vms
+  * vagrant -v
+  * vagrant suspend
+  * vagrant resume
+  * vagrant init hashicorp/precise32
+  * vagrant init centos/7
+  * vagrant ssh-config
+  * vagrant up                         # Bring up system
+  * vagrant ssh
+  * vagrant halt                       # Shutdown VM
+  * vagrant destory                    # Distory VM
+  * VBoxManage.exe -v
+  * VBoxManage.exe list vms
 
 Sometimes vagrant ssh (2.0.1) doesn't work in Window's Cygwin. Do the below to get around.
-
-ssh in:
   * To Fix: `export VAGRANT_PREFER_SYSTEM_BIN=1 `
      * See https://github.com/hashicorp/vagrant/issues/9143#issuecomment-343311263
   * To use TCP Networking:
