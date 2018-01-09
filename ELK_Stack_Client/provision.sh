@@ -28,9 +28,10 @@ cp -v /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml.orginal
 
 echo 'filebeat.prospectors:
 - type: log
-  enabled: false
+  enabled: true
   paths:
     - /var/log/messages
+  document_type: syslog
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml
   reload.enabled: false
@@ -43,14 +44,20 @@ setup.kibana:
 output.logstash:
   hosts: ["192.168.56.110:5043"]' > /etc/filebeat/filebeat.yml
 
+# Tell filebeat to load an index into elastic search.  This means that we
+# will be disabling filebeat from talking to LogStash, and talk to LogStash directly
+#
+#  [root@elkstackclient ~]# filebeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["192.168.56.110:9200"]'
+#  Loaded index template
+#  [root@elkstackclient ~]#
+/bin/filebeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["192.168.56.110:9200"]'
+
+# Delete everything for EletricSearch just incase there are data in there.
+curl -XDELETE 'http://192.168.56.110:9200/filebeat-*'
+
 # Start the service
 systemctl daemon-reload
-systemctl enable filebeat
-systemctl status filebeat
-systemctl start filebeat
-systemctl status filebeat
-
-# Do i need to enable some template?
-
-
-
+systemctl enable filebeat.service
+systemctl status filebeat.service
+systemctl start filebeat.service
+systemctl status filebeat.service
