@@ -18,9 +18,3 @@ systemctl enable salt-master.service
 # Disable IPtables just incase
 systemctl disable iptables.service
 systemctl disable firewalld.service
-
-#Testing this for link
-yum -y install epel-release
-yum -y install python2-pip
-pip install pylint
-pip install saltpylint

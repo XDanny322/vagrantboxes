@@ -1,2 +1,4 @@
 # Do not push any .vagrant metadata
 /*/.vagrant
+/*/salt-pillar
+/*/salt-state
