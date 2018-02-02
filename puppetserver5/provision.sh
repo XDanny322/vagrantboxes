@@ -58,7 +58,8 @@ echo "class test::test () {
 echo "##################################"
 echo "Installing Puppet DB (and Postgres)"
 echo "##################################"
-yum -y install puppetdb puppetdb-terminus puppetdb-termini
+yum -y install puppetdb puppetdb-terminus
+yum -y install puppetdb-termini
 
 # Install the repository RPM:
 yum -y install https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-redhat10-10-1.noarch.rpm
