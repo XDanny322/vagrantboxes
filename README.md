@@ -38,6 +38,7 @@ Vagrant Commands
   ```
 
 Sometimes vagrant ssh (2.0.1) doesn't work in Window's Cygwin. Do the below to get around.
+  * This has been fixed in vagrant v2.0.2
   * To Fix: `export VAGRANT_PREFER_SYSTEM_BIN=1 `
      * See https://github.com/hashicorp/vagrant/issues/9143#issuecomment-343311263
   * To use TCP Networking:
