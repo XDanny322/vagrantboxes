@@ -6,7 +6,7 @@
 yum -y install wget mlocate vim net-tools telnet
 
 yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el7.noarch.rpm
-yum -y install salt-master
+yum -y install salt-master-2017.7.2-1.el7
 
 # Enable saltmaster to list on all interfacts
 sed -i 's/#interface: 0.0.0.0/interface: 0.0.0.0/g' /etc/salt/master

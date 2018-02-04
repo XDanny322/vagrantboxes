@@ -6,7 +6,7 @@
 yum -y install wget mlocate vim net-tools telnet
 
 yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el7.noarch.rpm
-yum -y install salt-minion
+yum -y install salt-minion-2017.7.2-1.el7
 
 # Point the salt minion to the master
 echo "master: 192.168.56.113" > /etc/salt/minion
