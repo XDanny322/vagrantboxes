@@ -3,7 +3,8 @@
 # provision.sh for puppetmaster5
 ########################################################################
 # Install needed tools
-yum -y install wget mlocate vim net-tools telnet
+yum -y install epel-release
+yum -y install wget mlocate vim net-tools telnet python2-pip
 
 yum -y install https://yum.puppet.com/puppet5/puppet5-release-el-7.noarch.rpm
 yum -y install puppetserver

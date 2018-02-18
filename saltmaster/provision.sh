@@ -3,7 +3,8 @@
 # provision.sh for saltmaster
 ########################################################################
 # Install needed tools
-yum -y install wget mlocate vim net-tools telnet
+yum -y install epel-release
+yum -y install wget mlocate vim net-tools telnet python2-pip
 
 # yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el7.noarch.rpm
 # This will point you to the latest:

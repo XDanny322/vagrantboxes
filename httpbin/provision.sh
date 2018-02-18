@@ -4,7 +4,8 @@
 #  https://httpbin.org
 ########################################################################
 # Install needed tools
-yum -y install wget mlocate vim net-tools telnet
+yum -y install epel-release
+yum -y install wget mlocate vim net-tools telnet python2-pip
 
 yum -y install epel-release
 yum -y install python2-pip gcc

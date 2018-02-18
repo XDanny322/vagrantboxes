@@ -3,7 +3,8 @@
 # provision.sh for Jenkins
 ########################################################################
 # Install needed tools
-yum -y install wget mlocate vim net-tools telnet
+yum -y install epel-release
+yum -y install wget mlocate vim net-tools telnet python2-pip
 
 # Follow https://jenkins.io/download/
 wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo

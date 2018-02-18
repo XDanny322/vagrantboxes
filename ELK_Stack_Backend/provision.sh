@@ -3,7 +3,8 @@
 # provision.sh for ELK Stack Server
 ########################################################################
 # Install needed tools
-yum -y install wget mlocate vim net-tools telnet
+yum -y install epel-release
+yum -y install wget mlocate vim net-tools telnet python2-pip
 
 ###############################################################################
 # Downloading and install java
