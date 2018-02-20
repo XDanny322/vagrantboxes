@@ -32,4 +32,4 @@ yum clean all
 # yum install confluent-platform-2.11
 
 # Confluent Open Source:
-yum install confluent-platform-oss-2.11
+yum -y install confluent-platform-oss-2.11
