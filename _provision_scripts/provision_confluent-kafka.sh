@@ -2,6 +2,7 @@
 #
 # provision.sh for kafka
 ########################################################################
+set -x
 # Install needed tools
 yum -y install epel-release
 yum -y install wget mlocate vim net-tools telnet python2-pip
@@ -70,8 +71,7 @@ echo '# Licensed to the Apache Software Foundation (ASF) under one or more
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # the directory where the snapshot is stored.
-# dataDir=/var/lib/zookeeper
-dataDir=/usr/ops/kafka/snapshots/
+dataDir=/var/lib/zookeeper
 # the port at which the clients will connect
 clientPort=2181
 # disable the per-ip limit on the number of connections since this is a non-production config
@@ -99,11 +99,11 @@ server.3=192.168.56.124:2666:3666
 ' > /etc/kafka/zookeeper.properties
 
 # This houses snapshots and 'myid' file
-sudo mkdir -p /usr/ops/kafka/snapshots
-echo $num > /usr/ops/kafka/snapshots/myid
+sudo mkdir -p /var/lib/zookeeper
+echo $num > /var/lib/zookeeper/myid
 
 yes | cp -f /etc/kafka/server.properties /etc/kafka/server.properties.back
-echo '# Licensed to the Apache Software Foundation (ASF) under one or more
+echo "# Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
 # The ASF licenses this file to You under the Apache License, Version 2.0
@@ -281,7 +281,7 @@ confluent.support.customer.id=anonymous
 default.replication.factor=3
 min.insync.replicas=2
 
-' >  /etc/kafka/server.properties
+" >  /etc/kafka/server.properties
 
 # Auto start up
 #  Sourced: https://github.com/thmshmm/confluent-systemd
@@ -327,8 +327,8 @@ systemctl enable kafka
 systemctl enable zookeeper
 systemctl daemon-reload
 
-# systemctl start zookeeper
-# systemctl start kafka
+systemctl start zookeeper
+systemctl start kafka
 # systemctl stop zookeeper
 # systemctl stop kafka
 
@@ -356,4 +356,16 @@ systemctl daemon-reload
 #   schema-registry is [DOWN]
 #   [vagrant@centos7clean01 ~]$
 
-
+# To Test
+#   [root@PWDev023 bin]# ./kafka-console-consumer --bootstrap-server localhost:9092 --topic test --from-beginning
+#   test
+#   this is a test
+#   Thanks for your car danny
+#   one second
+#   jjj
+#   [root@PWDev022 bin]# ./kafka-console-producer --broker-list localhost:9092 --topic test
+#   >this is a test
+#   >Thanks for your car danny
+#   >one second
+#   >jjj
+#   >
