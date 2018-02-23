@@ -103,6 +103,8 @@ server.3=192.168.56.124:2666:3666
 
 # This houses snapshots and 'myid' file
 sudo mkdir -p /var/lib/zookeeper
+chmod 777 /var/lib/zookeeper
+
 echo $num > /var/lib/zookeeper/myid
 
 yes | cp -f /etc/kafka/server.properties /etc/kafka/server.properties.back
@@ -330,6 +332,12 @@ SuccessExitStatus=143
 WantedBy=multi-user.target
 ' > /usr/lib/systemd/system/kafka.service
 
+mkdir -p   /var/log/zookeeper
+chmod 777  /var/log/zookeeper
+chmod 777  /var/log/kafka
+mkdir -p   /var/lib/kafka
+chmod 777  /var/lib/kafka
+
 systemctl enable kafka
 systemctl enable zookeeper
 systemctl daemon-reload
@@ -338,12 +346,6 @@ systemctl start zookeeper
 systemctl start kafka
 # systemctl stop zookeeper
 # systemctl stop kafka
-
-chmod 777 /var/log/kafka
-
-mkdir -p   /var/log/zookeeper
-chmod 777  /var/log/zookeeper
-chmod 777  /var/log/kafka
 
 # To Test
 #   [root@PWDev023 bin]# ./kafka-console-consumer --bootstrap-server localhost:9092 --topic test --from-beginning
