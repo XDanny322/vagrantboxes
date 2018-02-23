@@ -35,6 +35,9 @@ yum clean all
 # Confluent Open Source:
 yum -y install confluent-platform-oss-2.11
 
+useradd kafka
+useradd zookeeper
+
 ###################################################
 # Some files in kafka needs id, like 1, 2, 3, etc.
 # The below -if- statement is to enforce those
@@ -291,6 +294,8 @@ After=network.target network-online.target remote-fs.target
 
 [Service]
 Type=forking
+User=zookeeper
+Group=zookeeper
 Environment="KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=10020 -Dcom.sun.management.jmxremote.local.only=true -Dcom.sun.management.jmxremote.authenticate=false"
 Environment="LOG_DIR=/var/log/zookeeper"
 Environment="KAFKA_HEAP_OPTS= -Xmx4G -Xms2G"
@@ -310,6 +315,8 @@ After=network.target network-online.target remote-fs.target zookeeper.service
 
 [Service]
 Type=forking
+User=kafka
+Group=kafka
 Environment="KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=10030 -Dcom.sun.management.jmxremote.local.only=true -Dcom.sun.management.jmxremote.authenticate=false"
 Environment="LOG_DIR=/var/log/kafka"
 Environment="KAFKA_HEAP_OPTS= -Xmx4G -Xms2G"
@@ -332,29 +339,11 @@ systemctl start kafka
 # systemctl stop zookeeper
 # systemctl stop kafka
 
-# How to test:
-# confluent start schema-registry
-# nohup zookeeper-server-start /etc/kafka/zookeeper.properties &
-# nohup kafka-server-start /etc/kafka/server.properties &
-# nohup schema-registry-start /etc/schema-registry/schema-registry.properties &
-# >/dev/null 2>&1 </dev/null &
+chmod 777 /var/log/kafka
 
-# How to start stop
-#   [vagrant@centos7clean01 ~]$  confluent start schema-registry
-#   Starting zookeeper
-#   zookeeper is [UP]
-#   Starting kafka
-#   kafka is [UP]
-#   Starting schema-registry
-#   schema-registry is [UP]
-#   [vagrant@centos7clean01 ~]$  confluent stop schema-registry
-#   Stopping connect
-#   connect is [DOWN]
-#   Stopping kafka-rest
-#   kafka-rest is [DOWN]
-#   Stopping schema-registry
-#   schema-registry is [DOWN]
-#   [vagrant@centos7clean01 ~]$
+mkdir -p   /var/log/zookeeper
+chmod 777  /var/log/zookeeper
+chmod 777  /var/log/kafka
 
 # To Test
 #   [root@PWDev023 bin]# ./kafka-console-consumer --bootstrap-server localhost:9092 --topic test --from-beginning
