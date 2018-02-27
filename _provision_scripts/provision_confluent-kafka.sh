@@ -97,8 +97,6 @@ server.1=192.168.56.122:2666:3666
 server.2=192.168.56.123:2666:3666
 server.3=192.168.56.124:2666:3666
 
-# The directory where the snapshot is stored.
-
 ' > /etc/kafka/zookeeper.properties
 
 # This houses snapshots and 'myid' file
