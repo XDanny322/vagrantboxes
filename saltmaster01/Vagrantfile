@@ -19,9 +19,9 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder  "salt-pillar/", "/srv/pillar",
     type: "rsync",
     rsync__exclude: ".git/",
-    rsync__auto: true
+    rsync__auto: true,
   config.vm.synced_folder  "salt-state/", "/srv/salt",
     type: "rsync",
     rsync__exclude: ".git/",
-    rsync__auto: true
+    rsync__auto: true,
 end
