@@ -1,5 +1,4 @@
 # Do not push any .vagrant metadata
 /*/.vagrant
-# These turned into syslinks on local checkout, so its ok now
-#  /*/salt-pillar
-#  /*/salt-state
+/*/salt-pillar
+/*/salt-state
