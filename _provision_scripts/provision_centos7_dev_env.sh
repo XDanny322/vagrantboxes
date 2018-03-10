@@ -1,17 +1,7 @@
 #!/bin/bash
-#
-# provision for my personal centos7 dev box
-########################################################################
-# Install needed tools
-yum -y install epel-release
-yum -y install wget mlocate vim net-tools telnet git python2-pip
 
-# Install VENV
+# Setting up pycharm
 pip install virtualenv
-
-# Enable SSH for my dev box
-sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g'  /etc/ssh/sshd_config
-service sshd restart
 
 # Install X and Char encoding.
 yum -y groupinstall "X Window System"

@@ -29,7 +29,41 @@ plays/hosts
 (venv) [vagrant@ansiblecontrol vagrant]$
 ```
 
-## Ping boxes
+## Ping boxes, on first long
+```
+Sat Mar 10 10:57:26 ~/vagrant/ansible(master) > vagrant ssh ansiblectrl
+[vagrant@ansiblectrl ~]$ source venv/bin/activate
+(venv) [vagrant@ansiblectrl ~]$ cd /vagrant/
+(venv) [vagrant@ansiblectrl vagrant]$ ll
+total 20
+drwxr-xr-x. 2 vagrant vagrant 4096 Mar  9 00:39 ansible_rpms
+drwxr-xr-x. 2 vagrant vagrant   19 Mar  9 04:07 playbooks
+-rw-r--r--. 1 vagrant vagrant 5830 Mar 10 05:00 Readme.md
+-rw-r--r--. 1 vagrant vagrant  239 Mar  9 03:45 requirements.txt
+-rw-r--r--. 1 vagrant vagrant 1802 Mar 10 15:50 Vagrantfile
+(venv) [vagrant@ansiblectrl vagrant]$ cd playbooks/
+(venv) [vagrant@ansiblectrl playbooks]$ ll
+total 4
+-rw-r--r--. 1 vagrant vagrant 503 Mar 10 15:51 hosts
+(venv) [vagrant@ansiblectrl playbooks]$ ansible all -i ./hosts -u vagrant -m ping -k
+SSH password:
+ansibleslve02 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+ansibleslve01 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+ansiblectrl | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+(venv) [vagrant@ansiblectrl playbooks]$
+
+```
+
+## Verbose Info
 ```
 (venv) [vagrant@ansiblecontrol plays]$ ansible all -i ./hosts -u vagrant -m ping -k -vvv
 ansible 2.4.3.0
@@ -82,7 +116,6 @@ META: ran handlers
 ```
 
 ## Command module
-
 ```
 (venv) [vagrant@ansiblecontrol plays]$ ansible all -i ./hosts -u vagrant -m command -a "hostname -f" -k
 SSH password:

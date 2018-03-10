@@ -1,29 +1,45 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-
 Vagrant.configure("2") do |config|
 
-  config.vm.define "controlserver" do |controlserver|
-    controlserver.vm.box = "centos/7"
-    controlserver.vm.hostname = "ansiblecontrol"
-    controlserver.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
-    controlserver.vm.network "private_network", ip: "192.168.56.126"
-    controlserver.vm.provider "virtualbox" do |v|
-        v.memory = 1024
-        v.cpus = 1
-    end
-    controlserver.vm.provision "shell", path: "..\\_provision_scripts\\provision_ansiblecontrol.sh", privileged: false
-  end
-
-  config.vm.define "slaveserver" do |slaveserver|
-    slaveserver.vm.box = "centos/7"
-    slaveserver.vm.hostname = "ansibleslave"
-    slaveserver.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
-    slaveserver.vm.network "private_network", ip: "192.168.56.127"
-    slaveserver.vm.provider "virtualbox" do |v|
+  # Reason we spin up all the slave machines first is so that the slave machines get
+  # their sshkeys genereated first.  When the control server comes in, it will get the
+  # ssh key for the slaves.
+  config.vm.define "ansibleslve01" do |ansibleslve01|
+    ansibleslve01.vm.box = "centos/7"
+    ansibleslve01.vm.hostname = "ansibleslve01"
+    ansibleslve01.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    ansibleslve01.vm.network "private_network", ip: "192.168.56.127"
+    ansibleslve01.vm.provider "virtualbox" do |v|
       v.memory = 1024
       v.cpus = 1
     end
-    # slaveserver.vm.provision "shell", path: "..\\_provision_scripts\\provision_ansiblecontrol.sh", privileged: false
+    ansibleslve01.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
   end
+
+  config.vm.define "ansibleslve02" do |ansibleslve02|
+    ansibleslve02.vm.box = "centos/7"
+    ansibleslve02.vm.hostname = "ansibleslve02"
+    ansibleslve02.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    ansibleslve02.vm.network "private_network", ip: "192.168.56.128"
+    ansibleslve02.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+      v.cpus = 1
+    end
+    ansibleslve02.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+  end
+
+  config.vm.define "ansiblectrl01" do |ansiblectrl01|
+    ansiblectrl01.vm.box = "centos/7"
+    ansiblectrl01.vm.hostname = "ansiblectrl01"
+    ansiblectrl01.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    ansiblectrl01.vm.network "private_network", ip: "192.168.56.126"
+    ansiblectrl01.vm.provider "virtualbox" do |v|
+        v.memory = 1024
+        v.cpus = 1
+    end
+    ansiblectrl01.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    ansiblectrl01.vm.provision "shell", path: "..\\_provision_scripts\\provision_ansiblecontrol.sh", privileged: false
+  end
+
 end

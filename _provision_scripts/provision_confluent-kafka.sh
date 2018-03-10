@@ -1,14 +1,5 @@
 #!/bin/bash
-#
-# provision.sh for kafka
-########################################################################
-set -x
-# Install needed tools
-yum -y install epel-release
-yum -y install wget mlocate vim net-tools telnet python2-pip
-
-# See
-# https://docs.confluent.io/current/installation/installing_cp.html#rpm-packages-via-yum
+# See https://docs.confluent.io/current/installation/installing_cp.html#rpm-packages-via-yum
 yum -y install java
 
 rpm --import https://packages.confluent.io/rpm/4.0/archive.key
@@ -30,11 +21,12 @@ enabled=1' > /etc/yum.repos.d/confluent.repo
 yum clean all
 
 # Confluent Enterprise:
-# yum install confluent-platform-2.11
+#  yum -y install confluent-platform-2.11
 
 # Confluent Open Source:
 yum -y install confluent-platform-oss-2.11
 
+# Add users
 useradd kafka
 useradd zookeeper
 
@@ -53,7 +45,6 @@ then
   num="3"
 fi
 echo $num
-
 
 #
 # Starting configuration

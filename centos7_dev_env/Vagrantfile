@@ -10,5 +10,6 @@ Vagrant.configure("2") do |config|
       v.memory = 1024
       v.cpus = 1
   end
-config.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7_dev_env.sh"
+  config.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+  config.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7_dev_env.sh"
 end

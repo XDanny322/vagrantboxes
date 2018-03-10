@@ -1,22 +1,6 @@
 #!/bin/bash
-#
-# provision.sh for saltmaster
-########################################################################
-# Install needed tools
-yum -y install epel-release
-yum -y install wget mlocate vim net-tools telnet python2-pip
-
 yum -y install https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el7.noarch.rpm
 yum -y install salt-master
-
-# Placing specific version of salt repo
-# echo "[salt-2017.7.2]
-# name=SaltStack 2017.7.2
-# baseurl=https://repo.saltstack.com/yum/redhat/7/x86_64/archive/2017.7.2/
-# failovermethod=priority
-# enabled=1
-# gpgcheck=0" > /etc/yum.repos.d/salt-2017.7.2.repo
-# yum -y install salt-master-2017.7.2-1.el7
 
 # Enable saltmaster to list on all interfacts
 sed -i 's/#interface: 0.0.0.0/interface: 0.0.0.0/g' /etc/salt/master
@@ -24,10 +8,6 @@ sed -i 's/#interface: 0.0.0.0/interface: 0.0.0.0/g' /etc/salt/master
 # Start the salt master
 systemctl start salt-master.service
 systemctl enable salt-master.service
-
-# Disable IPtables just incase
-systemctl disable iptables.service
-systemctl disable firewalld.service
 
 # If you want a bearbone salt state | pillar
 # setup, move the /srv_base dir to /srv
