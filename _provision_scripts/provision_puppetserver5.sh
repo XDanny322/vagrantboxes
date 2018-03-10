@@ -1,11 +1,4 @@
 #!/bin/bash
-#
-# provision.sh for puppetmaster5
-########################################################################
-# Install needed tools
-yum -y install epel-release
-yum -y install wget mlocate vim net-tools telnet python2-pip
-
 yum -y install https://yum.puppet.com/puppet5/puppet5-release-el-7.noarch.rpm
 yum -y install puppetserver
 # Installing the puppetserver will install the puppet-agent
@@ -24,10 +17,6 @@ sed -i 's/-Xmx2g/-Xmx512m/g' /etc/sysconfig/puppetserver
 # Start the puppet master
 systemctl start puppetserver.service
 systemctl enable puppetserver.service
-
-# Disable IPtables just incase
-systemctl disable iptables.service # This can be taken off
-systemctl disable firewalld.service
 
 echo "#####################################"
 echo "Creating barebone puppet environments"
