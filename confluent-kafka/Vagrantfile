@@ -4,44 +4,44 @@
 Vagrant.configure("2") do |config|
 
   # Kafka node 1
-  config.vm.define "confluent-kafka01" do |confluent-kafka01|
-    confluent-kafka01.vm.box = "centos/7"
-    confluent-kafka01.vm.hostname = "confluent-kafka01"
-    confluent-kafka01.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
-    confluent-kafka01.vm.network "private_network", ip: "192.168.56.122"
-    confluent-kafka01.vm.provider "virtualbox" do |v|
+  config.vm.define "kafka01" do |kafka01|
+    kafka01.vm.box = "centos/7"
+    kafka01.vm.hostname = "kafka01"
+    kafka01.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    kafka01.vm.network "private_network", ip: "192.168.56.122"
+    kafka01.vm.provider "virtualbox" do |v|
         v.memory = 1024
         v.cpus = 1
     end
-    confluent-kafka01.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
-    confluent-kafka01.vm.provision "shell", path: "..\\_provision_scripts\\provision_confluent-kafka.sh"
+    kafka01.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    kafka01.vm.provision "shell", path: "..\\_provision_scripts\\provision_confluent-kafka.sh"
   end
 
   # Kafka node 2
-  config.vm.define "confluent-kafka02" do |confluent-kafka02|
-    confluent-kafka02.vm.box = "centos/7"
-    confluent-kafka02.vm.hostname = "confluent-kafka02"
-    confluent-kafka02.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
-    confluent-kafka02.vm.network "private_network", ip: "192.168.56.123"
-    confluent-kafka02.vm.provider "virtualbox" do |v|
+  config.vm.define "kafka02" do |kafka02|
+    kafka02.vm.box = "centos/7"
+    kafka02.vm.hostname = "kafka02"
+    kafka02.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    kafka02.vm.network "private_network", ip: "192.168.56.123"
+    kafka02.vm.provider "virtualbox" do |v|
         v.memory = 1024
         v.cpus = 1
     end
-    confluent-kafka02.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
-    confluent-kafka02.vm.provision "shell", path: "..\\_provision_scripts\\provision_confluent-kafka.sh"
+    kafka02.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    kafka02.vm.provision "shell", path: "..\\_provision_scripts\\provision_confluent-kafka.sh"
   end
 
   # Kafka node 3
-  config.vm.define "confluent-kafka03" do |confluent-kafka03|
-    confluent-kafka03.vm.box = "centos/7"
-    confluent-kafka03.vm.hostname = "confluent-kafka03"
-    confluent-kafka03.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
-    confluent-kafka03.vm.network "private_network", ip: "192.168.56.124"
-    confluent-kafka03.vm.provider "virtualbox" do |v|
+  config.vm.define "kafka03" do |kafka03|
+    kafka03.vm.box = "centos/7"
+    kafka03.vm.hostname = "kafka03"
+    kafka03.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    kafka03.vm.network "private_network", ip: "192.168.56.124"
+    kafka03.vm.provider "virtualbox" do |v|
         v.memory = 1024
         v.cpus = 1
     end
-    confluent-kafka03.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
-    confluent-kafka03.vm.provision "shell", path: "..\\_provision_scripts\\provision_confluent-kafka.sh"
+    kafka03.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    kafka03.vm.provision "shell", path: "..\\_provision_scripts\\provision_confluent-kafka.sh"
   end
 end

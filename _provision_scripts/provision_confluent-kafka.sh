@@ -34,13 +34,13 @@ useradd zookeeper
 # Some files in kafka needs id, like 1, 2, 3, etc.
 # The below -if- statement is to enforce those
 #
-if [[ `hostname -f` == "confluent-kafka01" ]]
+if [[ `hostname -f` == "kafka01" ]]
 then
   num="1"
-elif  [[ `hostname -f` == "confluent-kafka02" ]]
+elif  [[ `hostname -f` == "kafka02" ]]
 then
   num="2"
-elif [[ `hostname -f` == "confluent-kafka03" ]]
+elif [[ `hostname -f` == "kafka03" ]]
 then
   num="3"
 fi
