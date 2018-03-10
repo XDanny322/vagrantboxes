@@ -2,13 +2,28 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "centos/7"
-  config.vm.hostname = "ansiblecontrol"
-  config.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
-  config.vm.network "private_network", ip: "192.168.56.126"
-  config.vm.provider "virtualbox" do |v|
+
+  config.vm.define "controlserver" do |controlserver|
+    controlserver.vm.box = "centos/7"
+    controlserver.vm.hostname = "ansiblecontrol"
+    controlserver.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    controlserver.vm.network "private_network", ip: "192.168.56.126"
+    controlserver.vm.provider "virtualbox" do |v|
+        v.memory = 1024
+        v.cpus = 1
+    end
+    controlserver.vm.provision "shell", path: "..\\_provision_scripts\\provision_ansiblecontrol.sh", privileged: false
+  end
+
+  config.vm.define "slaveserver" do |slaveserver|
+    slaveserver.vm.box = "centos/7"
+    slaveserver.vm.hostname = "ansibleslave"
+    slaveserver.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    slaveserver.vm.network "private_network", ip: "192.168.56.127"
+    slaveserver.vm.provider "virtualbox" do |v|
       v.memory = 1024
       v.cpus = 1
+    end
+    # slaveserver.vm.provision "shell", path: "..\\_provision_scripts\\provision_ansiblecontrol.sh", privileged: false
   end
-config.vm.provision "shell", path: "..\\_provision_scripts\\provision_ansiblecontrol.sh", privileged: false
 end
