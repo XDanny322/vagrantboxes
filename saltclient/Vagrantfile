@@ -1,0 +1,47 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  # Salt Client 1
+  config.vm.define "saltclientdlai01" do |saltclientdlai01|
+    saltclientdlai01.vm.box = "centos/7"
+    saltclientdlai01.vm.hostname = "saltclientdlai01.localdomain.com"
+    saltclientdlai01.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    saltclientdlai01.vm.network "private_network", ip: "192.168.56.114"
+    saltclientdlai01.vm.provider "virtualbox" do |v|
+        v.memory = 1024
+        v.cpus = 1
+    end
+    saltclientdlai01.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    saltclientdlai01.vm.provision "shell", path: "..\\_provision_scripts\\provision_saltclient.sh"
+  end
+
+  # Salt Client 2
+  config.vm.define "saltclientdlai02" do |saltclientdlai02|
+    saltclientdlai02.vm.box = "centos/7"
+    saltclientdlai02.vm.hostname = "saltclientdlai02.localdomain.com"
+    saltclientdlai02.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    saltclientdlai02.vm.network "private_network", ip: "192.168.56.115"
+    saltclientdlai02.vm.provider "virtualbox" do |v|
+        v.memory = 1024
+        v.cpus = 1
+    end
+    saltclientdlai02.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    saltclientdlai02.vm.provision "shell", path: "..\\_provision_scripts\\provision_saltclient.sh"
+  end
+
+  # Salt Client 3
+  config.vm.define "saltclientdlai03" do |saltclientdlai03|
+    saltclientdlai03.vm.box = "centos/7"
+    saltclientdlai03.vm.hostname = "saltclientdlai03.localdomain.com"
+    saltclientdlai03.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    saltclientdlai03.vm.network "private_network", ip: "192.168.56.116"
+    saltclientdlai03.vm.provider "virtualbox" do |v|
+        v.memory = 1024
+        v.cpus = 1
+    end
+    saltclientdlai03.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    saltclientdlai03.vm.provision "shell", path: "..\\_provision_scripts\\provision_saltclient.sh"
+  end
+end
