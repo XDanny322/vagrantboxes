@@ -38,3 +38,13 @@ plays/hosts
 }
 (venv) [vagrant@ansiblecontrol ~]$
 ```
+
+## Sending remove commands:
+```
+(venv) [vagrant@ansiblecontrol ~]$ ansible -i /vagrant/plays/hosts remote -b --become-user=root -m shell -a 'echo $HOME' --ask-pass
+SSH password:
+192.168.56.109 | SUCCESS | rc=0 >>
+/root
+
+(venv) [vagrant@ansiblecontrol ~]$
+```

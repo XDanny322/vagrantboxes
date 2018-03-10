@@ -14,6 +14,9 @@ sudo yum -y install python2-pip
 # This is needed for compiling ansible when installing via pip
 sudo yum -y install gcc
 
+# This is needed for Ansible to use --ask-pass option
+sudo yum -y install sshpass
+
 sudo pip install virtualenv
 
 virtualenv venv
