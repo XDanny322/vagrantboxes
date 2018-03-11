@@ -4,8 +4,20 @@ This is my personal ansible sand box. Sourced from https://serversforhackers.com
 
 The way this this vbox was designed, you should be able to edit the *plays* directory, and all the playbooks will auto rsync into the VM, under `/vagrant`
 
-## Workflow
+## Configs
+Configs of Ansible are controlled by a few files in order of president
 
+- ANSIBLE_CONFIG (an environment variable)
+- ansible.cfg (in the current directory)
+- .ansible.cfg (in the home directory)
+- /etc/ansible/ansible.cfg
+
+See [here](http://docs.ansible.com/ansible/latest/intro_configuration.html)
+
+Also, you can overwrite specific ones by adding environment variables
+- `export ANSIBLE_HOST_KEY_CHECKING=True`
+
+## Workflow
 ```
 [vagrant@ansiblecontrol ~]$ ll
 total 0
@@ -128,4 +140,56 @@ SSH password:
 centos7devenv
 
 (venv) [vagrant@ansiblecontrol plays]$
+```
+
+## Ansible adhoc commands
+
+With Ansible, its possible to make adhoc calls, with variables.  See structure below. with the below 'group_vars' and 'host_vars' are special 'folder' used to house variables.  In order of priority host specific supersedes groups.
+
+```
+(venv) [vagrant@ansiblectrl01 config_mgr]$ tree -C
+.
+├── ansible.cfg
+└── inventory
+    ├── production
+    │   ├── group_vars
+    │   │   ├── all
+    │   │   ├── ansiblectrl_group
+    │   │   └── ansibleslve_group
+    │   ├── host_vars
+    │   │   ├── ansiblectrl01
+    │   │   ├── ansibleslve01
+    │   │   └── ansibleslve02
+    │   └── inventory_prod
+    └── test
+        ├── group_vars
+        │   ├── all
+        │   ├── ansiblectrl_group
+        │   └── ansibleslve_group
+        ├── host_vars
+        │   ├── ansiblectrl01
+        │   ├── ansibleslve01
+        │   └── ansibleslve02
+        └── inventory_prod
+
+7 directories, 15 files
+(venv) [vagrant@ansiblectrl01 config_mgr]$
+```
+
+Also, note that it is possible to layout the structure differently as this is just one suggestion.
+
+This is to test the variable
+
+```
+(venv) [vagrant@ansiblectrl01 config_mgr]$ ansible datacenter -i inventory/production/inventory_prod -m command -a "echo {{username}}"
+ansibleslve01 | SUCCESS | rc=0 >>
+slave_var
+
+ansibleslve02 | SUCCESS | rc=0 >>
+slave_var
+
+ansiblectrl01 | SUCCESS | rc=0 >>
+node_var
+
+(venv) [vagrant@ansiblectrl01 config_mgr]$
 ```

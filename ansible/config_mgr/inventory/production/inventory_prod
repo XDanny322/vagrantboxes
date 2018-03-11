@@ -2,6 +2,9 @@ ansiblectrl01 ansible_ssh_host=127.0.0.1      # ansible_ssh_user=vagrant ansible
 ansibleslve01 ansible_ssh_host=192.168.56.127 # ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
 ansibleslve02 ansible_ssh_host=192.168.56.128 # ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
 
+#
+# Groups
+#
 [ansiblectrl_group]
 ansiblectrl01
 
@@ -13,6 +16,9 @@ ansibleslve02
 ansiblectrl_group
 ansibleslve_group
 
+#
+# Vars
+#
 [datacenter:vars]
 ansible_ssh_user=vagrant
 ansible_ssh_pass=vagrant
