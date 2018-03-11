@@ -1041,3 +1041,20 @@ ansibleslve02              : ok=3    changed=0    unreachable=0    failed=0
 (venv) [vagrant@ansiblectrl01 config_mgr]$
 
 ```
+
+
+### Run a site.yaml
+
+site.yaml is like a site.pp for puppet / top.sls for saltstack.
+
+```
+(venv) [vagrant@ansiblectrl01 roles]$ ansible-playbook site.yml -i /vagrant/config_mgr/inventory/production/inventory_prod
+
+PLAY [ansibleslve01:ansibleslve02] **********************************************************************************************************************************************
+
+TASK [Gathering Facts] **********************************************************************************************************************************************************
+ok: [ansibleslve01]
+ok: [ansibleslve02]
+
+TASK [webserver : Ensure that Apache is installed] ******************************************************************************************************************************
+```

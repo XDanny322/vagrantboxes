@@ -23,11 +23,16 @@
     yum:
       name=httpd
       state=present
-  - name: Start Apache Services
+    when:
+      ansible_os_family == "RedHat"
+
+  - name: Start Apache Service
     service:
       name=httpd
       enabled=yes
       state=started
+
+  # Creating test files
   - name: Placing (touch) a test file
     file:
       path=/tmp/{{ item }}
@@ -38,12 +43,23 @@
       - test
       - test1
       - test2
+
+  # Creating test files
   - name: Placing a line in the test file.
     lineinfile:
       dest=/tmp/test
       line="This is a line i am enforcing"
       state=present
       insertafter=EOF
+
+  # Creating test files
+  - name: Placing a test file via template
+    template:
+      src=templates/test.j2
+      dest=/tmp/test.j2
+    notify:
+      - Restart Apache
+
   # This is a way to get debugging info
   - name: Debugging message
     debug:
@@ -54,20 +70,34 @@
       - "{{ favcolor }}"
       - "{{ mykey }}"
 
+  handlers:
+  - name: Restart Apache
+    service:
+      name=httpd
+      state=restarted
+
+#
+# This is another play, in the same playbook
+#
 - hosts: ansibleslve02
   become: true
   become_user: root
-  tasks:
-  - name: Ensure that Apache is installed
-    yum:
-      name=httpd
-      state=present
-  - name: Start Apache Services
-    service:
-      name=httpd
-      enabled=yes
-      state=started
 
+  tasks:
+  - name: Ensure packages is installed
+    yum:
+      name={{ item }}
+      state=present
+    when:
+      ansible_os_family == "RedHat"
+    with_items:
+      - postgresql
+      - epel-release
+
+
+#
+# Here is an example output:
+#
 
 # (venv) [vagrant@ansiblectrl01 config_mgr]$ ansible-playbook -i inventory/production/inventory_prod playbooks/httpd.yaml
 # what is your name?:

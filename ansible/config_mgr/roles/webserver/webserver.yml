@@ -1,0 +1,6 @@
+---
+- hosts: ansibleslve01
+  become: true
+  become_user: root
+  roles:
+    - webserver

@@ -1,0 +1,8 @@
+---
+- hosts: ansibleslve01:ansibleslve02
+  become: true
+  become_user: root
+  roles:
+  - webserver
+
+- import_playbook: webserver.yml
