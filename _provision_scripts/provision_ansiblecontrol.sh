@@ -17,14 +17,13 @@ pip install -r /vagrant/requirements.txt
 
 # Getting known hows for slave systems onto
 #  See: https://askubuntu.com/questions/123072/ssh-automatically-accept-keys
-hosts="
-127.0.0.1
-192.168.56.126
-192.168.56.127
-192.168.56.128
-"
-
-for host in $hosts
-do
-    ssh-keyscan -H $host >> ~/.ssh/known_hosts
-done
+#
+# This has been turned off, since we asked ansbile to not check SSH Fingerprints
+# in ansible.cfg
+#  See: http://docs.ansible.com/ansible/latest/intro_configuration.html#host-key-checking
+#
+# hosts="127.0.0.1 192.168.56.126 192.168.56.127 192.168.56.128"
+# for host in $hosts
+# do
+#     ssh-keyscan -H $host >> ~/.ssh/known_hosts
+# done
