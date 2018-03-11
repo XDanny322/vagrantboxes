@@ -1,0 +1,135 @@
+---
+# This play will install httpd on both slave system
+# This is a demo, sinc eif they takes was the same, it
+# will be easier to target the group.
+- hosts: ansibleslve01
+  become: true
+  become_user: root
+
+  # This is a way to get input during a rule.
+  vars_prompt:
+    - name: "yourname"
+      prompt: "what is your name?"
+    - name: "quest"
+      prompt: "what is your quest?"
+    - name: "favcolor"
+      prompt: "what is your favorite color?"
+
+  vars:
+    mykey: myvalue
+
+  tasks:
+  - name: Ensure that Apache is installed
+    yum:
+      name=httpd
+      state=present
+  - name: Start Apache Services
+    service:
+      name=httpd
+      enabled=yes
+      state=started
+  - name: Placing (touch) a test file
+    file:
+      path=/tmp/{{ item }}
+      state=touch
+      owner=root
+      mode=0777
+    with_items:
+      - test
+      - test1
+      - test2
+  - name: Placing a line in the test file.
+    lineinfile:
+      dest=/tmp/test
+      line="This is a line i am enforcing"
+      state=present
+      insertafter=EOF
+  # This is a way to get debugging info
+  - name: Debugging message
+    debug:
+      msg=This is a debug message {{ item }}
+    with_items:
+      - "{{ yourname }}"
+      - "{{ quest }}"
+      - "{{ favcolor }}"
+      - "{{ mykey }}"
+
+- hosts: ansibleslve02
+  become: true
+  become_user: root
+  tasks:
+  - name: Ensure that Apache is installed
+    yum:
+      name=httpd
+      state=present
+  - name: Start Apache Services
+    service:
+      name=httpd
+      enabled=yes
+      state=started
+
+
+# (venv) [vagrant@ansiblectrl01 config_mgr]$ ansible-playbook -i inventory/production/inventory_prod playbooks/httpd.yaml
+# what is your name?:
+# what is your quest?:
+# what is your favorite color?:
+
+# PLAY [ansibleslve01] *******************************************************************************************************************
+
+# TASK [Gathering Facts] *****************************************************************************************************************
+# ok: [ansibleslve01]
+
+# TASK [Ensure that Apache is installed] *************************************************************************************************
+# ok: [ansibleslve01]
+
+# TASK [Start Apache Services] ***********************************************************************************************************
+# ok: [ansibleslve01]
+
+# TASK [Placing (touch) a test file] *****************************************************************************************************
+# changed: [ansibleslve01] => (item=test)
+# changed: [ansibleslve01] => (item=test1)
+# changed: [ansibleslve01] => (item=test2)
+
+# TASK [Placing a line in the test file.] ************************************************************************************************
+# ok: [ansibleslve01]
+
+# TASK [Debugging message] ***************************************************************************************************************
+# ok: [ansibleslve01] => (item=Danny) => {
+#     "changed": false,
+#     "item": "Danny",
+#     "msg": "This"
+# }
+# ok: [ansibleslve01] => (item=your) => {
+#     "changed": false,
+#     "item": "your",
+#     "msg": "This"
+# }
+# ok: [ansibleslve01] => (item=ddd) => {
+#     "changed": false,
+#     "item": "ddd",
+#     "msg": "This"
+# }
+# ok: [ansibleslve01] => (item=myvalue) => {
+#     "changed": false,
+#     "item": "myvalue",
+#     "msg": "This"
+# }
+
+# PLAY [ansibleslve02] *******************************************************************************************************************
+
+# TASK [Gathering Facts] *****************************************************************************************************************
+# ok: [ansibleslve02]
+
+# TASK [Ensure that Apache is installed] *************************************************************************************************
+# ok: [ansibleslve02]
+
+# TASK [Start Apache Services] ***********************************************************************************************************
+# ok: [ansibleslve02]
+
+# PLAY RECAP *****************************************************************************************************************************
+# ansibleslve01              : ok=6    changed=1    unreachable=0    failed=0
+# ansibleslve02              : ok=3    changed=0    unreachable=0    failed=0
+
+# (venv) [vagrant@ansiblectrl01 config_mgr]$
+
+
