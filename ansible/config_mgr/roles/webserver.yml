@@ -1,6 +1,0 @@
----
-- hosts: webserver01
-  become: true
-  become_user: root
-  roles:
-    - webserver

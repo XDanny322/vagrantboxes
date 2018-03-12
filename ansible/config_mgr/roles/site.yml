@@ -1,8 +1,16 @@
 ---
-- hosts: webserver01
+- hosts: webserver01  # You can use groups, or Regex match here:
   become: true
   become_user: root
   roles:
-  - webserver
+    - webserver
 
-- import_playbook: webserver.yml
+- hosts: dbserver01
+  become: true
+  become_user: root
+  roles:
+    - dbserver
+
+# You can import other playbooks like this:
+# - import_playbook: webserver.yml
+

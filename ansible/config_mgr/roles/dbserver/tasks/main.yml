@@ -1,0 +1,17 @@
+---
+- name: Install mssql-server-2017.repo Repo
+  command: curl -o /etc/yum.repos.d/mssql-server.repo https://packages.microsoft.com/config/rhel/7/mssql-server-2017.repo
+  args:
+    creates: /etc/yum.repos.d/mssql-server.repo
+
+- name: Install prod.repo Repos
+  command: curl -o /etc/yum.repos.d/msprod.repo https://packages.microsoft.com/config/rhel/7/prod.repo
+  args:
+    creates: /etc/yum.repos.d/msprod.repo
+
+- name: Ensure that MSSQL is installed
+  yum:
+    name=mssql-server
+    state=present
+  when:
+    ansible_os_family == "RedHat"

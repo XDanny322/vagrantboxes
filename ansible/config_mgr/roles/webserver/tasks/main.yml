@@ -13,16 +13,18 @@
     state=started
 
 # Creating test files
-- name: Placing (touch) a test file
-  file:
-    path=/tmp/{{ item }}
-    state=touch
-    owner=root
-    mode=0777
-  with_items:
-    - test
-    - test1
-    - test2
+# The issue with touch is, it will always cause a -change-
+#
+# - name: Placing (touch) a test file
+#   file:
+#     path=/tmp/{{ item }}
+#     state=touch
+#     owner=root
+#     mode=0777
+#   with_items:
+#     - test
+#     - test1
+#     - test2
 
 # Creating test files
 - name: Placing a line in the test file.
