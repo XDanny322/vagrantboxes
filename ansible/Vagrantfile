@@ -29,7 +29,10 @@ Vagrant.configure("2") do |config|
     dbserver01.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
   end
 
-  config.vm.define "ansiblectrl01" do |ansiblectrl01|
+  #
+  # Ansible Control box
+  #
+  config.vm.define "ansiblectrl01", primary: true do |ansiblectrl01|
     ansiblectrl01.vm.box = "centos/7"
     ansiblectrl01.vm.hostname = "ansiblectrl01"
     ansiblectrl01.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"

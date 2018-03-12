@@ -1,5 +1,5 @@
 ---
-- hosts: ansibleslve01:ansibleslve02
+- hosts: webserver01
   become: true
   become_user: root
   roles:

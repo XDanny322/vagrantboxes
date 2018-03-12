@@ -1,5 +1,5 @@
 ---
-- hosts: ansibleslve01
+- hosts: webserver01
   become: true
   become_user: root
   roles:
