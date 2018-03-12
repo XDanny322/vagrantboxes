@@ -5,28 +5,28 @@ Vagrant.configure("2") do |config|
   # Reason we spin up all the slave machines first is so that the slave machines get
   # their sshkeys genereated first.  When the control server comes in, it will get the
   # ssh key for the slaves.
-  config.vm.define "ansibleslve01" do |ansibleslve01|
-    ansibleslve01.vm.box = "centos/7"
-    ansibleslve01.vm.hostname = "ansibleslve01"
-    ansibleslve01.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
-    ansibleslve01.vm.network "private_network", ip: "192.168.56.127"
-    ansibleslve01.vm.provider "virtualbox" do |v|
+  config.vm.define "webserver01" do |webserver01|
+    webserver01.vm.box = "centos/7"
+    webserver01.vm.hostname = "webserver01"
+    webserver01.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    webserver01.vm.network "private_network", ip: "192.168.56.127"
+    webserver01.vm.provider "virtualbox" do |v|
       v.memory = 1024
       v.cpus = 1
     end
-    ansibleslve01.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    webserver01.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
   end
 
-  config.vm.define "ansibleslve02" do |ansibleslve02|
-    ansibleslve02.vm.box = "centos/7"
-    ansibleslve02.vm.hostname = "ansibleslve02"
-    ansibleslve02.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
-    ansibleslve02.vm.network "private_network", ip: "192.168.56.128"
-    ansibleslve02.vm.provider "virtualbox" do |v|
+  config.vm.define "dbserver01" do |dbserver01|
+    dbserver01.vm.box = "centos/7"
+    dbserver01.vm.hostname = "dbserver01"
+    dbserver01.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    dbserver01.vm.network "private_network", ip: "192.168.56.128"
+    dbserver01.vm.provider "virtualbox" do |v|
       v.memory = 1024
       v.cpus = 1
     end
-    ansibleslve02.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    dbserver01.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
   end
 
   config.vm.define "ansiblectrl01" do |ansiblectrl01|
