@@ -46,4 +46,4 @@ Sometimes vagrant ssh (2.0.1) doesn't work in Window's Cygwin. Do the below to g
     * `ssh -i .vagrant/machines/default/virtualbox/private_key -p 2222 vagrant@localhost`
 
 In order to active rsync on a box, to sync you file system, you need to do the below.  See https://github.com/fusioneng/reactor/issues/21
-* `vagrant rsync-auto`
+* `vagrant rsync-auto &`
