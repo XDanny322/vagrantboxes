@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
     server.winrm.username = "vagrant"
     server.winrm.password = "vagrant"
     server.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
-    server.vm.network "private_network", ip: "192.168.56.108"
+    server.vm.network "private_network", ip: "192.168.56.131"
     server.vm.provider "virtualbox" do |v|
         v.memory = 4096
         v.cpus = 2
