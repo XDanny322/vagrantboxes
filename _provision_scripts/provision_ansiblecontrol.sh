@@ -12,18 +12,8 @@ sudo pip install virtualenv
 virtualenv venv
 source /home/vagrant/venv/bin/activate
 
+# In case you need to update pip:
+#  pip install -U pip setuptools
+
 # The requirements.txt came from rsync via vagrant
 pip install -r /vagrant/requirements.txt
-
-# Getting known hows for slave systems onto
-#  See: https://askubuntu.com/questions/123072/ssh-automatically-accept-keys
-#
-# This has been turned off, since we asked ansbile to not check SSH Fingerprints
-# in ansible.cfg
-#  See: http://docs.ansible.com/ansible/latest/intro_configuration.html#host-key-checking
-#
-# hosts="127.0.0.1 192.168.56.126 192.168.56.127 192.168.56.128"
-# for host in $hosts
-# do
-#     ssh-keyscan -H $host >> ~/.ssh/known_hosts
-# done

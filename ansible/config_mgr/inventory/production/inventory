@@ -1,6 +1,7 @@
 ansiblectrl01 ansible_ssh_host=127.0.0.1      # ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
 webserver01   ansible_ssh_host=192.168.56.127 # ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
 dbserver01    ansible_ssh_host=192.168.56.128 # ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+win2k12db01  ansible_ssh_host=192.168.56.129 # ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
 
 #
 # Groups
@@ -14,10 +15,14 @@ webserver01
 [dbserver_group]
 dbserver01
 
+[win2k12db01_group]
+win2k12db01
+
 [datacenter:children]
 ansiblectrl_group
 webserver_group
 dbserver_group
+win2k12db01_group
 
 #
 # Vars
