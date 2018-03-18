@@ -13,4 +13,5 @@ pyasn1==0.4.2
 pycparser==2.18
 PyNaCl==1.2.1
 PyYAML==3.12
+pywinrm==0.2.2
 six==1.11.0
