@@ -1,0 +1,37 @@
+---
+- name: Placing a test file via template for windows
+  template:
+    src=test.j2
+    dest=C:/test
+
+- name: Install IIS Webserver
+  win_feature:
+    name: Web-Server
+    state: present
+  when: ansible_os_family == "Windows"
+
+- name: Deploy index file
+  template:
+    src: iisstart.j2
+    dest: c:\inetpub\wwwroot\iisstart.htm
+
+- name : Ensure Notepad++ is install via Chocolatey
+  win_chocolatey:
+    name: notepadplusplus
+    state: present
+
+- name : Ensure atom is install via Chocolatey
+  win_chocolatey:
+    name: atom
+    state: present
+
+- name: Create LocalAdmin and place in Admin Group
+  win_user:
+    name: localadmin
+    password: "Password1234!"
+    group: ["Administrators"]
+
+- name: Install mysql database
+  win_chocolatey:
+    name: mysql
+    state: present

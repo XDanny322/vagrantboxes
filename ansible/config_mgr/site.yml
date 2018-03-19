@@ -11,6 +11,11 @@
   roles:
     - dbserver
 
+- hosts: win2k12db01
+  roles:
+    - windows
+
+
 # You can import other playbooks like this:
 # - import_playbook: webserver.yml
 

@@ -1,8 +1,8 @@
 # Ansible VBox
 
-This is my personal ansible sand box. Sourced from https://serversforhackers.com/c/an-ansible2-tutorial. Ansible in this case is installed via pip, and ran via the vagrant user, and not root, to sure there are no root powers needed.
+This is my personal ansible sand box. Ansible in this case is installed via pip, and ran via the vagrant user, and not root, to sure there are no root powers needed.
 
-The way this this vbox was designed, you should be able to edit the *plays* directory, and all the playbooks will auto rsync into the VM, under `/vagrant`
+The way this repo was designed, you should be able to edit the play/config_mgr directory. All the playbooks will auto rsync into the VM, under `/vagrant`
 
 ## Configs
 Configs of Ansible are controlled by a few files in order of president
@@ -16,6 +16,17 @@ See [here](http://docs.ansible.com/ansible/latest/intro_configuration.html)
 
 Also, you can overwrite specific ones by adding environment variables
 - `export ANSIBLE_HOST_KEY_CHECKING=True`
+
+## Windows Server
+When trying to test on windows boxes, using http (and not https), on the windows box, you will need to enabled winrm to use unencrypted traffic. See [here](http://nokitel.im/index.php/2016/11/09/how-to-manage-windows-server-2016-with-ansible/)
+
+To do that:
+```
+winrm set winrm/config/service '@{AllowUnencrypted="true"}'
+winrm set winrm/config/service/auth '@{Basic="true"}'
+```
+
+Note that, it seems like Win2k16 has unencrypted winrm ON by default, where win2k12r2 does not.  In another word, the above only needs to be ran on win2k12 setups.
 
 ## Workflow
 ```
@@ -75,17 +86,152 @@ ansiblectrl | SUCCESS => {
 
 ```
 
-
 ## Ping box, asking for password
 ```
 ansible all -i inventory/non-production/inventory_nonprod  -m ping --ask-pass
 ```
 
-# Ping box, asking for password, and su password
+## Ping box, asking for password, and su password
 ```
 ansible-playbook site.yml -i inventory/non-production/inventory  --ask-pass --ask-become-pass
+```
+
+## Reboot
+```
+(venv) [vagrant@ansiblectrl01 config_mgr]$ ansible webserver01 -i inventory/production/inventory -m command -a " /sbin/shutdown -r +1" --become --become-method=sudo --ask-become-pass
+SUDO password:
+ [WARNING]: Module invocation had junk after the JSON data:   Broadcast message from root@webserver01 (Mon 2018-03-19 03:43:17 UTC):    The system is
+going down for reboot at Mon 2018-03-19 03:44:17 UTC!
+
+webserver01 | SUCCESS | rc=0 >>
+Shutdown scheduled for Mon 2018-03-19 03:44:17 UTC, use 'shutdown -c' to cancel.
+
+(venv) [vagrant@ansiblectrl01 config_mgr]$ ansible webserver01 -i inventory/production/inventory -m command -a "w"
+webserver01 | SUCCESS | rc=0 >>
+ 03:45:00 up 0 min,  1 user,  load average: 0.54, 0.17, 0.06
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+vagrant  pts/0    192.168.56.126   03:45    0.00s  0.11s  0.02s w
+
+(venv) [vagrant@ansiblectrl01 config_mgr]$
+```
+
+## Windows command
+```
+(venv) [vagrant@ansiblectrl01 config_mgr]$ ansible windows_group -m raw -a "dir"
+win2k12db01 | SUCCESS | rc=0 >>
+
+
+    Directory: C:\Users\vagrant
+
+
+Mode                LastWriteTime     Length Name
+----                -------------     ------ ----
+d-r--         2/16/2017   4:37 PM            Contacts
+d-r--         2/16/2017   4:37 PM            Desktop
+d-r--         2/16/2017   4:37 PM            Documents
+d-r--         2/16/2017   4:37 PM            Downloads
+d-r--         2/16/2017   4:37 PM            Favorites
+d-r--         2/16/2017   4:37 PM            Links
+d-r--         2/16/2017   4:37 PM            Music
+d-r--         2/16/2017   4:37 PM            Pictures
+d-r--         2/16/2017   4:37 PM            Saved Games
+d-r--         2/16/2017   4:37 PM            Searches
+d-r--         2/16/2017   4:37 PM            Videos
+-a---         2/16/2017   4:38 PM          6 .vbox_version
+-a---         2/16/2017   4:39 PM   59369472 VBoxGuestAdditions.iso
+
+(venv) [vagrant@ansiblectrl01 config_mgr]$
+```
+
+## Window Service
+```
+(venv) [vagrant@ansiblectrl01 config_mgr]$ ansible windows_group -m win_service -a "name=spooler"
+win2k12db01 | SUCCESS => {
+    "can_pause_and_continue": false,
+    "changed": true,
+    "depended_by": [],
+    "dependencies": [
+        "RPCSS",
+        "http"
+    ],
+    "description": "This service spools print jobs and handles interaction with the printer.  If you turn off this service, you won’t be able to print or see your printers.",
+    "desktop_interact": false,
+    "display_name": "Print Spooler",
+    "exists": true,
+    "name": "spooler",
+    "path": "C:\\Windows\\System32\\spoolsv.exe",
+    "start_mode": "auto",
+    "state": "running",
+    "username": "LocalSystem"
+}
+(venv) [vagrant@ansiblectrl01 config_mgr]$
+(venv) [vagrant@ansiblectrl01 config_mgr]$ ansible windows_group -m win_service -a "name=spooler state=stopped"
+win2k12db01 | SUCCESS => {
+    "can_pause_and_continue": false,
+    "changed": true,
+    "depended_by": [],
+    "dependencies": [
+        "RPCSS",
+        "http"
+    ],
+    "description": "This service spools print jobs and handles interaction with the printer.  If you turn off this service, you won’t be able to print or see your printers.",
+    "desktop_interact": false,
+    "display_name": "Print Spooler",
+    "exists": true,
+    "name": "spooler",
+    "path": "C:\\Windows\\System32\\spoolsv.exe",
+    "start_mode": "auto",
+    "state": "stopped",
+    "username": "LocalSystem"
+}
+(venv) [vagrant@ansiblectrl01 config_mgr]$ ansible windows_group -m win_service -a "name=spooler state=start"
+win2k12db01 | FAILED! => {
+    "changed": false,
+    "msg": "Get-AnsibleParam: Argument state needs to be one of started,stopped,restarted,absent,paused but was start."
+}
+(venv) [vagrant@ansiblectrl01 config_mgr]$ ansible windows_group -m win_service -a "name=spooler state=started"
+win2k12db01 | SUCCESS => {
+    "can_pause_and_continue": false,
+    "changed": true,
+    "depended_by": [],
+    "dependencies": [
+        "RPCSS",
+        "http"
+    ],
+    "description": "This service spools print jobs and handles interaction with the printer.  If you turn off this service, you won’t be able to print or see your printers.",
+    "desktop_interact": false,
+    "display_name": "Print Spooler",
+    "exists": true,
+    "name": "spooler",
+    "path": "C:\\Windows\\System32\\spoolsv.exe",
+    "start_mode": "auto",
+    "state": "running",
+    "username": "LocalSystem"
+}
+(venv) [vagrant@ansiblectrl01 config_mgr]$
+(venv) [vagrant@ansiblectrl01 config_mgr]$ ansible windows_group -m win_feature -a "name=Telnet-Client state=present"
+win2k12db01 | SUCCESS => {
+    "changed": true,
+    "exitcode": "Success",
+    "feature_result": [
+        {
+            "display_name": "Telnet Client",
+            "id": 44,
+            "message": [],
+            "reboot_required": false,
+            "restart_needed": false,
+            "skip_reason": "NotSkipped",
+            "success": true
+        }
+    ],
+    "reboot_required": false,
+    "restart_needed": false,
+    "success": true
+}
+(venv) [vagrant@ansiblectrl01 config_mgr]$
 
 ```
+
 ## Verbose Info
 ```
 (venv) [vagrant@ansiblecontrol plays]$ ansible all -i ./hosts -u vagrant -m ping -k -vvv
@@ -208,7 +354,6 @@ node_var
 ## Facts
 
 This is how you call for facts:
-
 ```
 
 (venv) [vagrant@ansiblectrl01 config_mgr]$  ansible ansiblectrl01 -i inventory/production/inventory_prod -m setup -a "filter=*hostname*"

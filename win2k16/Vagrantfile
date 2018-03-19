@@ -1,0 +1,20 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "win2k16" do |server|
+    server.vm.box = "mwrock/Windows2016"
+    server.vm.hostname = "win2k16"
+    server.vm.communicator = "winrm"
+    server.winrm.username = "vagrant"
+    server.winrm.password = "vagrant"
+    server.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    server.vm.network "private_network", ip: "192.168.56.132"
+    server.vm.provider "virtualbox" do |v|
+        v.memory = 4096
+        v.cpus = 2
+    end
+  end
+
+end

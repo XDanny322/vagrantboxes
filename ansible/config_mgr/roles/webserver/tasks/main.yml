@@ -27,20 +27,20 @@
 #     - test2
 
 # Creating test files
+- name: Placing a test file via template
+  template:
+    src=test.j2
+    dest=/tmp/test
+  notify:
+    - Restart Apache
+
+# Creating test files
 - name: Placing a line in the test file.
   lineinfile:
     dest=/tmp/test
     line="This is a line i am enforcing"
     state=present
     insertafter=EOF
-
-# Creating test files
-- name: Placing a test file via template
-  template:
-    src=test.j2
-    dest=/tmp/test.j2
-  notify:
-    - Restart Apache
 
 # This is a way to get debugging info
 - name: Debugging message
