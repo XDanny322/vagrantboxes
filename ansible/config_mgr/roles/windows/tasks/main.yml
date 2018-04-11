@@ -35,3 +35,9 @@
   win_chocolatey:
     name: mysql
     state: present
+
+# - name: Install sql-server-express database
+#   win_chocolatey:
+#     name: sql-server-express
+#     state: present
+

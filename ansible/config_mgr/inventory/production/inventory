@@ -37,3 +37,8 @@ windows_group
 [linux:vars]
 ansible_ssh_user=vagrant
 ansible_ssh_pass=vagrant
+
+# This how you can add sudo passwords in this inventory file
+#  ansible_su_pass=  ansible_sudo_pass=
+# Then you can add this on the commandline as well
+#  ansible_ssh_user=dlai ansible_ssh_pass=<password> ansible_su_pass=<password

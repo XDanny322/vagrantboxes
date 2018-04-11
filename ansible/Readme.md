@@ -94,6 +94,8 @@ ansible all -i inventory/non-production/inventory_nonprod  -m ping --ask-pass
 ## Ping box, asking for password, and su password
 ```
 ansible-playbook site.yml -i inventory/non-production/inventory  --ask-pass --ask-become-pass
+ansible uat -i inventory/non-production/inventory -m command -a "ls -d /home/portware/Portware//data/audit_trail/appserver"  --ask-pass --become --become-method=su --ask-become-pass
+
 ```
 
 ## Reboot

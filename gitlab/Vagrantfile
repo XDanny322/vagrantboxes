@@ -1,0 +1,17 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.define "gitlab01", primary: true do |gitlab01|
+    gitlab01.vm.box = "centos/7"
+    gitlab01.vm.hostname = "gitlab01"
+    gitlab01.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    gitlab01.vm.network "private_network", ip: "192.168.56.133"
+    gitlab01.vm.provider "virtualbox" do |v|
+        v.memory = 4096
+        v.cpus = 2
+    end
+    gitlab01.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    gitlab01.vm.provision "shell", path: "..\\_provision_scripts\\provision_gitlab.sh"
+  end
+end

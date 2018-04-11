@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 ###############################################################################
 # pycharm
@@ -29,4 +30,13 @@ tar -xvf /home/vagrant/pycharm-community-2017.3.4.tar
 # rvm install 2.4.2
 # rvm use 2.4.2 --default
 # gem install jekyll bundler minima
-#bundle exec jekyll serve --host 0.0.0.0
+# bundle exec jekyll serve --host 0.0.0.0
+###############################################################################
+
+###############################################################################
+# aws cli
+su - vagrant
+virtualenv venv_awscli
+source venv_awscli/bin/activate
+pip install awscli
+
