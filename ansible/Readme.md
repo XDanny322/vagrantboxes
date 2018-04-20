@@ -1216,3 +1216,42 @@ ok: [ansibleslve02]
 
 TASK [webserver : Ensure that Apache is installed] ******************************************************************************************************************************
 ```
+
+## Using valut
+
+To See an encrypted file
+
+```
+(venv_ansible) [vagrant@centos7devenv _tmp]$ ansible-vault view test.yml  --vault-password-file=passwd.txt
+this is a test string
+(venv_ansible) [vagrant@centos7devenv _tmp]$
+```
+
+
+To decypt (remove encryption for good)
+
+```
+(venv_ansible) [vagrant@centos7devenv _tmp]$ ansible-vault decrypt test.yml   --vault-password-file=passwd.txt
+Decryption successful
+(venv_ansible) [vagrant@centos7devenv _tmp]$ ll
+total 8
+-rw-rw-r--. 1 vagrant vagrant 14 Apr 20 22:20 passwd.txt
+-rw-------. 1 vagrant vagrant 22 Apr 20 22:21 test.yml
+(venv_ansible) [vagrant@centos7devenv _tmp]$ cat test.yml
+this is a test string
+```
+
+To encrypt a file.
+
+```
+(venv_ansible) [vagrant@centos7devenv _tmp]$ ansible-vault encrypt test.yml   --vault-password-file=passwd.txt
+Encryption successful
+(venv_ansible) [vagrant@centos7devenv _tmp]$ cat test.yml
+$ANSIBLE_VAULT;1.1;AES256
+34363063633163393465373435626433646231353662613335623664393066633662393833666561
+3463346139393566336439633133323530366466636530340a346631393234383134383264313339
+38316462613632623035343161346238303637653831663537326331616462383930386665623666
+3532643865376466330a303238343339326537356539313364623832366636656362646137623036
+31313066386135356562343935353836356261303539626632303537343131306666
+(venv_ansible) [vagrant@centos7devenv _tmp]$
+```
