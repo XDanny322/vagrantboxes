@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
       rsync__auto: true
   end
 
-  config.vm.define "saltmaster02" do |saltmaster02|
+  config.vm.define "saltmaster02", autostart: false do |saltmaster02|
     saltmaster02.vm.box = "centos/7"
     saltmaster02.vm.hostname = "saltmaster02.localdomain.com"
     saltmaster02.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
