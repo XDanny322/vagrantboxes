@@ -5,6 +5,7 @@ This is my personal ansible sand box. Ansible in this case is installed via pip,
 The way this repo was designed, you should be able to edit the play/config_mgr directory. All the playbooks will auto rsync into the VM, under `/vagrant`
 
 ## Configs
+
 Configs of Ansible are controlled by a few files in order of president
 
 - ANSIBLE_CONFIG (an environment variable)
@@ -87,11 +88,13 @@ ansiblectrl | SUCCESS => {
 ```
 
 ## Ping box, asking for password
+
 ```
 ansible all -i inventory/non-production/inventory_nonprod  -m ping --ask-pass
 ```
 
 ## Ping box, asking for password, and su password
+
 ```
 ansible-playbook site.yml -i inventory/non-production/inventory  --ask-pass --ask-become-pass
 ansible uat -i inventory/non-production/inventory -m command -a "ls -d /home/portware/Portware//data/audit_trail/appserver"  --ask-pass --become --become-method=su --ask-become-pass
@@ -235,6 +238,7 @@ win2k12db01 | SUCCESS => {
 ```
 
 ## Verbose Info
+
 ```
 (venv) [vagrant@ansiblecontrol plays]$ ansible all -i ./hosts -u vagrant -m ping -k -vvv
 ansible 2.4.3.0
@@ -287,6 +291,7 @@ META: ran handlers
 ```
 
 ## Command module
+
 ```
 (venv) [vagrant@ansiblecontrol plays]$ ansible all -i ./hosts -u vagrant -m command -a "hostname -f" -k
 SSH password:
