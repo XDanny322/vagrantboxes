@@ -16,4 +16,4 @@ source /home/vagrant/venv/bin/activate
 #  pip install -U pip setuptools
 
 # The requirements.txt came from rsync via vagrant
-pip install -r /vagrant/requirements.txt
+# pip install -r /vagrant/requirements.txt
