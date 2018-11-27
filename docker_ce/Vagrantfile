@@ -1,0 +1,84 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "dockersvr01", primary: true do |dockersvr01|
+    dockersvr01.vm.box = "centos/7"
+    dockersvr01.vm.hostname = "dockersvr01"
+    dockersvr01.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    dockersvr01.vm.network "private_network", ip: "192.168.56.134"
+    dockersvr01.vm.provider "virtualbox" do |v|
+        v.memory = 2048
+        v.cpus = 2
+    end
+    dockersvr01.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    dockersvr01.vm.provision "shell", path: "..\\_provision_scripts\\provision_docker_ce.sh"
+  end
+
+  config.vm.define "dockersvr02", autostart: true do |dockersvr02|
+    dockersvr02.vm.box = "centos/7"
+    dockersvr02.vm.hostname = "dockersvr02"
+    dockersvr02.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    dockersvr02.vm.network "private_network", ip: "192.168.56.135"
+    dockersvr02.vm.provider "virtualbox" do |v|
+        v.memory = 2048
+        v.cpus = 2
+    end
+    dockersvr02.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    dockersvr02.vm.provision "shell", path: "..\\_provision_scripts\\provision_docker_ce.sh"
+  end
+
+  config.vm.define "dockersvr03", autostart: true do |dockersvr03|
+    dockersvr03.vm.box = "centos/7"
+    dockersvr03.vm.hostname = "dockersvr03"
+    dockersvr03.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    dockersvr03.vm.network "private_network", ip: "192.168.56.136"
+    dockersvr03.vm.provider "virtualbox" do |v|
+        v.memory = 2048
+        v.cpus = 2
+    end
+    dockersvr03.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    dockersvr03.vm.provision "shell", path: "..\\_provision_scripts\\provision_docker_ce.sh"
+  end
+
+  config.vm.define "dockersvr04", autostart: true do |dockersvr04|
+    dockersvr04.vm.box = "centos/7"
+    dockersvr04.vm.hostname = "dockersvr04"
+    dockersvr04.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    dockersvr04.vm.network "private_network", ip: "192.168.56.137"
+    dockersvr04.vm.provider "virtualbox" do |v|
+        v.memory = 2048
+        v.cpus = 2
+    end
+    dockersvr04.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    dockersvr04.vm.provision "shell", path: "..\\_provision_scripts\\provision_docker_ce.sh"
+  end
+
+  config.vm.define "dockersvr05", autostart: true do |dockersvr05|
+    dockersvr05.vm.box = "centos/7"
+    dockersvr05.vm.hostname = "dockersvr05"
+    dockersvr05.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    dockersvr05.vm.network "private_network", ip: "192.168.56.138"
+    dockersvr05.vm.provider "virtualbox" do |v|
+        v.memory = 2048
+        v.cpus = 2
+    end
+    dockersvr05.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    dockersvr05.vm.provision "shell", path: "..\\_provision_scripts\\provision_docker_ce.sh"
+  end
+
+  config.vm.define "dockersvr06", autostart: true do |dockersvr06|
+    dockersvr06.vm.box = "centos/7"
+    dockersvr06.vm.hostname = "dockersvr05"
+    dockersvr06.vm.network "public_network", bridge: "Intel(R) Dual Band Wireless-AC 8260"
+    dockersvr06.vm.network "private_network", ip: "192.168.56.139"
+    dockersvr06.vm.provider "virtualbox" do |v|
+        v.memory = 2048
+        v.cpus = 2
+    end
+    dockersvr06.vm.provision "shell", path: "..\\_provision_scripts\\provision_centos7.sh"
+    dockersvr06.vm.provision "shell", path: "..\\_provision_scripts\\provision_docker_ce.sh"
+  end
+
+end
