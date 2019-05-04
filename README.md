@@ -18,7 +18,8 @@ To use this repo, usually on your laptop
 * `vagrant up`
 
 ## Mac
-* Coming soon
+* `brew cask install virtualbox`
+* `brew cask install vagrant`
 
 ## Notes
 Vagrant Commands
