@@ -10,11 +10,11 @@ yum -y install dejavu-lgc-sans-fonts
 yum -y install xclock
 
 # Setting up pycharm, as vagrant
-su - vagrant
-cd /home/vagrant/
-wget https://download.jetbrains.com/python/pycharm-community-2017.3.4.tar.gz
-gunzip /home/vagrant/pycharm-community-2017.3.4.tar.gz
-tar -xvf /home/vagrant/pycharm-community-2017.3.4.tar
+# su - vagrant
+# cd /home/vagrant/
+# wget https://download.jetbrains.com/python/pycharm-community-2017.3.4.tar.gz
+# gunzip /home/vagrant/pycharm-community-2017.3.4.tar.gz
+# tar -xvf /home/vagrant/pycharm-community-2017.3.4.tar
 ###############################################################################
 
 ###############################################################################
