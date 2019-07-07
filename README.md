@@ -34,6 +34,7 @@ Vagrant Commands
   vagrant ssh
   vagrant halt
   vagrant destory
+  vagrant snapshot save centos7clean01 centos7clean01
   VBoxManage.exe -v
   VBoxManage.exe list vms
   ```
