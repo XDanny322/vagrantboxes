@@ -13,29 +13,32 @@ Vagrant.configure("2") do |config|
         v.cpus = 2
     end
     k8smaster.vm.provision "shell", path: "../_provision_scripts/provision_centos7.sh"
+    k8smaster.vm.provision "shell", path: "../_provision_scripts/provision_k8s_default.sh"
   end
 
-  config.vm.define "node01", autostart: false do |node01|
+  config.vm.define "node01", autostart: true do |node01|
     node01.vm.box = "centos/7"
     node01.vm.hostname = "node01"
     node01.vm.network "public_network", bridge: "en0: Wi-Fi (Wireless)"
     node01.vm.network "private_network", ip: "192.168.56.142"
     node01.vm.provider "virtualbox" do |v|
-        v.memory = 4096
-        v.cpus = 2
+      v.memory = 4096
+      v.cpus = 2
     end
     node01.vm.provision "shell", path: "../_provision_scripts/provision_centos7.sh"
+    node01.vm.provision "shell", path: "../_provision_scripts/provision_k8s_default.sh"
   end
 
-  config.vm.define "node02", autostart: false do |node02|
+  config.vm.define "node02", autostart: true do |node02|
     node02.vm.box = "centos/7"
     node02.vm.hostname = "node02"
     node02.vm.network "public_network", bridge: "en0: Wi-Fi (Wireless)"
     node02.vm.network "private_network", ip: "192.168.56.143"
     node02.vm.provider "virtualbox" do |v|
-        v.memory = 4096
-        v.cpus = 2
+      v.memory = 4096
+      v.cpus = 2
     end
     node02.vm.provision "shell", path: "../_provision_scripts/provision_centos7.sh"
+    node02.vm.provision "shell", path: "../_provision_scripts/provision_k8s_default.sh"
   end
 end

@@ -1,0 +1,76 @@
+#!/bin/bash
+########################################################################
+# See https://www.howtoforge.com/tutorial/centos-kubernetes-docker-cluster/
+#
+#
+# cmd that needs to be ran on the master AFTER setup
+#    # Set netfilter
+#    modprobe br_netfilter
+#    echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
+#
+#    kubeadm init --apiserver-advertise-address=192.168.56.141 --pod-network-cidr=10.244.0.0/16
+#
+#    mkdir -p $HOME/.kube
+#    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+#    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+#
+#    kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+
+echo  "
+192.168.56.141 k8smaster
+192.168.56.142 node01
+192.168.56.143 node02
+" >> /etc/hosts
+
+# Disable SE Linux
+setenforce 0
+sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+
+# Set netfilter
+modprobe br_netfilter
+echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
+
+# Turn off swap
+swapoff -a
+sed -i 's/\/swap/#\/swap/g' /etc/fstab
+
+# Install docker and dependancy
+yum install -y yum-utils device-mapper-persistent-data lvm2
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install -y docker-ce
+
+## Create /etc/docker directory.
+mkdir /etc/docker
+
+# Setup daemon.
+# See https://kubernetes.io/docs/setup/production-environment/container-runtimes/
+cat > /etc/docker/daemon.json <<EOF
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2",
+  "storage-opts": [
+    "overlay2.override_kernel_check=true"
+  ]
+}
+EOF
+
+# Install K8S
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+        https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+
+yum install -y kubelet kubeadm kubectl
+systemctl start docker && systemctl enable docker
+systemctl start kubelet && systemctl enable kubelet
