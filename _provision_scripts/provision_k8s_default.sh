@@ -14,7 +14,10 @@
 #    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 #    sudo chown $(id -u):$(id -g) $HOME/.kube/config
 #
-#    kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+#    # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
+#    # kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml
+#    kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/62e44c867a2846fefb68bd5f178daf4da3095ccb/Documentation/kube-flannel.yml
+
 
 
 echo  "
@@ -26,14 +29,6 @@ echo  "
 # Disable SE Linux
 setenforce 0
 sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
-
-# Set netfilter
-modprobe br_netfilter
-echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
-
-# Turn off swap
-swapoff -a
-sed -i 's/\/swap/#\/swap/g' /etc/fstab
 
 # Install docker and dependancy
 yum install -y yum-utils device-mapper-persistent-data lvm2
@@ -70,6 +65,14 @@ repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
         https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
+
+# Set netfilter
+modprobe br_netfilter
+echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
+
+# Turn off swap
+swapoff -a
+sed -i 's/\/swap/#\/swap/g' /etc/fstab
 
 yum install -y kubelet kubeadm kubectl
 systemctl start docker && systemctl enable docker
