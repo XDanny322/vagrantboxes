@@ -4,21 +4,58 @@
 #
 #
 # cmd that needs to be ran on the master AFTER setup
-#    # Set netfilter
-#    modprobe br_netfilter
-#    echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
+#   # Set netfilter
+#   modprobe br_netfilter
+#   echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
 #
-#    kubeadm init --apiserver-advertise-address=192.168.56.141 --pod-network-cidr=10.244.0.0/16
+#   kubeadm init --apiserver-advertise-address=192.168.56.141 --pod-network-cidr=192.168.0.0/16
+#   # kubeadm init --apiserver-advertise-address=192.168.56.141 --pod-network-cidr=10.244.0.0/16
 #
-#    mkdir -p $HOME/.kube
-#    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-#    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+#   mkdir -p $HOME/.kube
+#   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+#   sudo chown $(id -u):$(id -g) $HOME/.kube/config
 #
-#    # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
-#    # kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml
-#    kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/62e44c867a2846fefb68bd5f178daf4da3095ccb/Documentation/kube-flannel.yml
-
-
+#   # https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
+#
+#   kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml
+#   # kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/62e44c867a2846fefb68bd5f178daf4da3095ccb/Documentation/kube-flannel.yml
+#
+#   echo "
+#   kind: Deployment
+#   apiVersion: apps/v1beta1
+#   metadata:
+#     name: my-httpd
+#   spec:
+#     replicas: 2
+#     template:
+#       metadata:
+#         labels:
+#           app: webservers
+#       spec:
+#         containers:
+#         - name: my-httpd-container1
+#           image: httpd
+#           ports:
+#           - containerPort: 80
+#   " > deploy.yml
+#
+#
+#   echo "
+#   kind: Service
+#   apiVersion: v1
+#   metadata:
+#     name: my-httpd-service
+#   spec:
+#     selector:
+#       app: webservers
+#     type: LoadBalancer
+#     externalIPs:
+#     - 192.168.56.141
+#     ports:
+#       - name: my-apache-port
+#         port: 8080
+#         targetPort: 80
+#   " > svc.yml
 
 echo  "
 192.168.56.141 k8smaster
