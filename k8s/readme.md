@@ -51,14 +51,10 @@ kubectl delete service hello-world
 kubectl delete deployment hello-world
 kubectl delete pods hello-world
 
-~~~~~
 
-Redeploy
-[root@k8smaster tmp]# kubectl apply -f deployment.json
-deployment.apps/hello-world created
-[root@k8smaster tmp]# kubectl apply -f service.json
-service/hello-world created
-[root@k8smaster tmp]#
+kubectl apply -f deployment.json
+kubectl apply -f service.json
+
 
 ~~~~~
 
