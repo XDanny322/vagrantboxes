@@ -55,8 +55,21 @@ kubectl delete pods hello-world
 kubectl apply -f deployment.json
 kubectl apply -f service.json
 
-
-~~~~~
-
 kubectl edit deploy hello-world
+
+
+# Get inside one container
+kubectl exec -ti my-nginx-86459cfc9f-s9mr6 -c my-nginx -- /bin/bash
+kubectl exec my-nginx-86459cfc9f-s9mr6 -- /bin/ls -l
+
+# This is how to run in docker
+docker run \
+     -it \
+     --rm \
+     -v ~/.aws:/root/.aws \
+     --entrypoint /bin/bash \
+     868257600322.dkr.ecr.us-east-1.amazonaws.com/ec2-linux
+
+# How to run kubectl
+kubectl run ec2-linux --image=868257600322.dkr.ecr.us-east-1.amazonaws.com/ec2-linux
 
