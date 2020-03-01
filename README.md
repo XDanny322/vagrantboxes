@@ -20,6 +20,7 @@ To use this repo, usually on your laptop
 ## Mac
 * `brew cask install virtualbox`
 * `brew cask install vagrant`
+* `brew cask upgrade virtualbox`
 
 ## Notes
 Vagrant Commands
